@@ -1,22 +1,13 @@
-import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function App() {
-    const [employeeCount, setEmployeeCount] = useState<number>(0);
-
-    useEffect(() => {
-        checkConnectivity();
-    }, []);
-
-    return (<>
-        <div>Connectivity check: {employeeCount > 0 ? `OK (${employeeCount})` : `NOT READY`}</div>
-        <div>Complete your app here</div>
-    </>);
-
-    async function checkConnectivity() {
-        const response = await fetch('api/employees');
-        const data = await response.json();
-        setEmployeeCount(data.length);
-    }
+    return (
+        <>
+            <h2>Home</h2>
+            <p>Welcome. Use the link below to view employees.</p>
+            <p><Link to="/employees">Go to Employees</Link></p>
+        </>
+    );
 }
 
 export default App;

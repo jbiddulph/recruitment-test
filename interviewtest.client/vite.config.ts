@@ -30,8 +30,7 @@ if (env.VITE_USE_HTTPS === 'true' && (!fs.existsSync(certFilePath) || !fs.exists
     }
 }
 
-const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
-    env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'https://localhost:7278';
+const target = env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:5039';
 
 // https://vitejs.dev/config/
 export default defineConfig({
