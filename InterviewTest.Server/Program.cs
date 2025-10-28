@@ -100,6 +100,15 @@ using (var connection = new SqliteConnection(connectionStringBuilder.ConnectionS
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowClient", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -107,7 +116,7 @@ app.UseDefaultFiles();
 
 app.UseStaticFiles();
 
-app.UseHttpsRedirection();
+app.UseCors("AllowClient");
 
 app.UseAuthorization();
 
