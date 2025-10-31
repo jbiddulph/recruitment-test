@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Swal from 'sweetalert2';
 
 type Employee = {
     name: string;
@@ -78,6 +79,11 @@ export default function EmployeesPage() {
         if (!resp.ok) { setError(`Add failed: HTTP ${resp.status}`); return; }
         setName(""); setValue(0);
         await fetchEmployees();
+        await Swal.fire({
+            title: "Success!",
+            text: "A new employee has been added!",
+            icon: "success"
+        });
     }
 
     async function updateEmployee() {
@@ -101,6 +107,11 @@ export default function EmployeesPage() {
         if (!resp.ok) { setError(`Update failed: HTTP ${resp.status}`); return; }
         setEditingId(null);
         await fetchEmployees();
+        await Swal.fire({
+            title: "Success",
+            text: "Employee has been updated!",
+            icon: "success"
+        });
     }
 
     function startEdit(employee: Employee) {
@@ -117,8 +128,17 @@ export default function EmployeesPage() {
 
     async function deleteEmployee(n: string) {
         setError(null);
-        const confirmed = window.confirm(`Delete employee "${n}"? This cannot be undone.`);
-        if (!confirmed) return;
+        const result = await Swal.fire({
+            title: 'Delete employee?',
+            text: `Are you sure you want to delete "${n}"? This cannot be undone.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel'
+        });
+        if (!result.isConfirmed) return;
         const resp = await fetch(`http://localhost:5039/api/Employees?name=${encodeURIComponent(n)}`, { method: 'DELETE' });
         if (!resp.ok) { setError(`Delete failed: HTTP ${resp.status}`); return; }
         await fetchEmployees();
