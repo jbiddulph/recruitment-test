@@ -187,7 +187,8 @@ export default function EmployeesPage() {
                     />
                     <button 
                         onClick={addEmployee}
-                        className="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-white text-sm font-medium shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        disabled={!name}
+                        className="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-white text-sm font-medium shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                         Add
                     </button>
